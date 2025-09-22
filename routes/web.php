@@ -10,7 +10,7 @@ Route::get('/planeten', function () {
 	return ["Uranus", "Jupiter", "Mars", "Aarde", "Saturnus", "Pluto", "Neptunus", "Venus"];
 });
 
-Route::get('/planets', function () {
+Route::get('/planets/{planet?}', function ($planet = null) {
 	$planets = [
 		[
 			'name' => 'Mars',
@@ -30,5 +30,17 @@ Route::get('/planets', function () {
 		],
 	];
 
-	return view('planets', ['planets' => $planets]);
+	// Support query parameter `planeet` as well as optional route parameter
+	if (!$planet && request()->has('planeet')) {
+		$planet = request('planeet');
+	}
+
+	$collection = collect($planets);
+
+	if ($planet) {
+		$lookup = ucfirst(strtolower($planet));
+		$collection = $collection->where('name', $lookup);
+	}
+
+	return view('planets', ['planets' => $collection->values()->all()]);
 });
