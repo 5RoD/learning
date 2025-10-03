@@ -9,7 +9,7 @@
         h1 { margin-bottom: 1rem; }
         ul { list-style: disc; padding-left: 1.5rem; }
         li { margin-bottom: 1rem; }
-        .name { font-weight: 600; }
+        .name { font-weight: 601; }
         .description { color: #333; }
     </style>
     </head>
